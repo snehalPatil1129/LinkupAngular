@@ -1,0 +1,500 @@
+<script src="/SiteAssets/Timesheet/angular.js"></script>  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+<!--Application-->
+<script src="/SiteAssets/Timesheet/Add-Edit-Timesheet/addEditTimesheetCtrl.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/SiteAssets/Timesheet/spcrud.js"></script> 
+<link rel="stylesheet" href="/SiteAssets/Timesheet/Add-Edit-Timesheet/addEditTimesheet.css">
+<link rel="stylesheet" href="/SiteAssets/Timesheet/Add-Edit-Timesheet/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+ <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>  -->
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+<!-- <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> -->
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700,800,900">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">		
+<!--Main-->
+<div ng-app="AddEditTimesheeApp">
+       <div ng-controller="AddEditTimesheetController">
+	<section class="ts-main" style="margin-left: -260px !important;margin-top: -80px !important;">
+		<div class="ts-header">
+			<div class="row">
+				<div class="col-md-5">
+                    <h4 class="ts-week">
+                        <!-- <img src="img/check.png" class="ts-check"/> -->
+                         Week:{{firstday | date :"dd"}} To {{lastday | date:"dd/MM/yyyy"}} <span class="ts-status ts-approved">{{TimesheetStatus}}</span>  </h4>
+				</div>
+				<div class="col-md-7">
+					<div class="ts-dateBox">
+						<div class="arrow-box">
+							<!-- <span class="icon-arrow-box leftArrow"><i class="fa fa-chevron-left" aria-hidden="true"></i></span> -->
+							<a href="" ng-click="getPreviousTimesheet()" ><span class="icon-arrow-box leftArrow"><i class="fa fa-chevron-left"  aria-hidden="true"></i></span></a>
+							<!-- <input type="text" class="ts-date datepicker" /> -->
+							<!-- <input class="form-control"  placeholder="DD/MM/YYY" id="dateStart"  name="dateStart" type="text" class="ts-date datepicker" /> -->
+							<input class="ts-date datepicker"  placeholder="DD/MM/YYY" value="{{DateBox}}" id="dateStart"  name="dateStart" type="text" style="width:70%;"/>
+							<a href="" ng-click="getNextTimesheet()" ><span class="icon-arrow-box rightArrow"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></a>
+							<!-- <i class="fa fa-calendar-o dateIcon" aria-hidden="true"></i> -->
+							<!-- <span class="icon-arrow-box rightArrow" style="margin-left: 1px;"><i class="fa fa-chevron-right" aria-hidden="true"></i></span> -->
+						</div>
+						<!-- <button class="ts-copyBtn"><i class="material-icons">content_copy</i> Copy Timesheet</button> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--<div class="alert alert-danger" ng-if="isError" style="margin-bottom: 0px;">
+            {{errorMessage}}
+        </div>-->
+			<div class="row">	
+				<div class="col-md-12">
+				<div class="table-responsive" >    
+					<table class="table ts-table">
+						<thead>
+						  <tr>
+							<th style="border-top-left-radius: 6px;">Project</th>
+							<th>Task</th>
+							<th>B /<br/>NB</th>
+							<th>Mon<br/>{{firstday | date:"dd/MM"}}</th>
+							<th>Tue<br/>{{tue | date:"dd/MM"}}</th>
+							<th>Wed<br/>{{wed | date:"dd/MM"}}</th>
+							<th>Thur<br/>{{thu | date:"dd/MM"}}</th>
+							<th>Fri<br/>{{fri | date:"dd/MM"}}</th>
+							<th>Sat<br/>{{sat | date:"dd/MM"}}</th>
+							<th>Sun<br/>{{lastday | date:"dd/MM"}}</th>
+							<th>Status<br/></th>
+							<th style="border-top-right-radius: 6px;">Action</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr  ng-show="TimesheetDiv" ng-repeat="Timsheet  in TimesheetDivs track by $index">
+							  <!--  -->
+							<td>
+								<select id="cmbAll" class="ts-select" name="ddlProjects" ng-model="Timsheet.ddlProject"  ng-options="x for x in ProjectTitle"  ng-change="onChange($index)" ng-if="Timsheet.ddlProject !=='Leave'">
+                                   <option value="" selected>{{TimesheetProject}}</option>
+								</select>
+								<select id="cmbAll" class="ts-select" ng-disabled="true" ng-if="Timsheet.ddlProject ==='Leave'">
+                                   <option value="" selected>Leave</option>
+								</select>
+								<i class="fa fa-angle-down downSelect" aria-hidden="true"></i>
+								<br/>
+
+								<label class="ts-managerLabel">
+									{{Timsheet.ProjectManagerName}}
+								</label>
+							</td>
+							<td>
+								<select id="cmbAll" class="ts-select" name="ddlTask" ng-model="Timsheet.ddlTasks"  ng-options="x for x in Phases[$index]"  ng-change="" ng-if="Timsheet.ddlProject !=='Leave'">
+                                   <option value="" selected>Select</option>
+								</select>
+								<select id="cmbAll" class="ts-select" ng-disabled="true" ng-if="Timsheet.ddlProject ==='Leave'">
+                                   <option value="" selected>Leave</option>
+								</select>
+								<i class="fa fa-angle-down downSelect" aria-hidden="true"></i>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label ts-hr-label1">
+										B 
+									</div>
+									<div class="ts-hr-label ts-hr-label1">
+										NB
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<!--<input type="text" ng-model="Timsheet.MonHrs"  class="ts-comment" value="{{BillableMondayhrs}}" />-->
+										<input type="text" ng-keypress="timeKeyPress($event)" ng-blur="setTimeFormat($event.target.value,$index,'MonHrs')" ng-model="Timsheet.MonHrs" ng-value="Timsheet.MonHrs" class="ts-comment" ng-init="Timsheet.MonHrs=Timsheet.MonHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<a ng-disabled="disableForLeave(Timsheet)" ng-click="DisplayPopUp(BMondayDescription)"><i class="fa fa-pencil" id="BMondayDescription" aria-hidden="true"></i></a>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text" ng-keypress="timeKeyPress($event)" ng-blur="setTimeFormat($event.target.value,$index,'NBMonHrs')" ng-model="Timsheet.NBMonHrs" ng-value="Timsheet.NBMonHrs" class="ts-comment" ng-init="Timsheet.NBMonHrs=Timsheet.NBMonHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text" ng-model="Timsheet.NBMonHrs"  class="ts-comment"  value="{{NonBillableMondayhrs}}" />-->
+										<a ng-disabled="disableForLeave(Timsheet)"><i class="fa fa-pencil" id="NBMondayDescription" ng-click="DisplayPopUp(NBMondayDescription)" aria-hidden="true"></i></a>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<!--<input type="text"  ng-model="Timsheet.TueHrs" class="ts-comment" value="{{BillableTuesdayhrs}}"/>-->
+										<input type="text"  ng-model="Timsheet.TueHrs" ng-blur="setTimeFormat($event.target.value,$index,'TueHrs')" class="ts-comment" ng-value="Timsheet.TueHrs" ng-init="Timsheet.TueHrs=Timsheet.TueHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text"  ng-model="Timsheet.NBTueHrs" ng-blur="setTimeFormat($event.target.value,$index,'NBTueHrs')" type="text" class="ts-comment"  ng-value="Timsheet.NBTueHrs" ng-init="Timsheet.NBTueHrs=Timsheet.NBTueHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text"  ng-model="Timsheet.NBTueHrs" type="text" class="ts-comment"  value="{{NonBillableTuesdayhrs}}" />-->
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text" ng-model="Timsheet.WedHrs" ng-blur="setTimeFormat($event.target.value,$index,'WedHrs')" class="ts-comment"  ng-value="Timsheet.WedHrs" ng-init="Timsheet.WedHrs=Timsheet.WedHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text" ng-model="Timsheet.WedHrs" class="ts-comment"  value="{{BillableWednesdayhrs}}" />-->
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+									<div class="ts-hr-label">
+										<!--<input type="text"  ng-model="Timsheet.NBWedHrs" class="ts-comment" value="{{NonBillableWednesdayHrs}}" />-->
+										<input type="text"  ng-model="Timsheet.NBWedHrs" ng-blur="setTimeFormat($event.target.value,$index,'NBWedHrs')" class="ts-comment" ng-value="Timsheet.NBWedHrs" ng-init="Timsheet.NBWedHrs=Timsheet.NBWedHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text"  ng-model="Timsheet.ThuHrs" ng-blur="setTimeFormat($event.target.value,$index,'ThuHrs')" class="ts-comment" ng-value="Timsheet.ThuHrs" ng-init="Timsheet.ThuHrs=Timsheet.ThuHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text"  ng-model="Timsheet.ThuHrs" class="ts-comment" value="{{BillableThursdayhrs}}" />-->
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text"  ng-model="Timsheet.NBThuHrs" ng-blur="setTimeFormat($event.target.value,$index,'NBThuHrs')" class="ts-comment" ng-value="Timsheet.NBThuHrs" ng-init="Timsheet.NBThuHrs=Timsheet.NBThuHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text"  ng-model="Timsheet.NBThuHrs" class="ts-comment" value="{{NonBillableThursdayHrs}}" />-->
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text" ng-model="Timsheet.FriHrs" ng-blur="setTimeFormat($event.target.value,$index,'FriHrs')" class="ts-comment" ng-value="Timsheet.FriHrs" ng-init="Timsheet.FriHrs=Timsheet.FriHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text" ng-model="Timsheet.FriHrs" class="ts-comment" value="{{BillableFridayhrs}}" />-->
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text" ng-model="Timsheet.NBFriHrs" ng-blur="setTimeFormat($event.target.value,$index,'NBFriHrs')" class="ts-comment" ng-value="Timsheet.NBFriHrs" ng-init="Timsheet.NBFriHrs=Timsheet.NBFriHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text" ng-model="Timsheet.NBFriHrs" class="ts-comment" value="{{NonBillableFridayHrs}}" />-->
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text" ng-model="Timsheet.SatHrs" ng-blur="setTimeFormat($event.target.value,$index,'SatHrs')" class="ts-comment" ng-value="Timsheet.SatHrs" ng-init="Timsheet.SatHrs=Timsheet.SatHrs"  ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text" ng-model="Timsheet.SatHrs" class="ts-comment" value="{{BillableSaturdayHrs}}"  />-->
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text" ng-model="Timsheet.NBSatHrs" ng-blur="setTimeFormat($event.target.value,$index,'NBSatHrs')" class="ts-comment" ng-value="Timsheet.NBSatHrs" ng-init="Timsheet.NBSatHrs=Timsheet.NBSatHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text" ng-model="Timsheet.NBSatHrs" class="ts-comment" value="{{NonBillableSaturdayHrs}}" />-->
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text"  ng-model="Timsheet.SunHrs" ng-blur="setTimeFormat($event.target.value,$index,'SunHrs')" class="ts-comment" ng-value="Timsheet.SunHrs" ng-init="Timsheet.SunHrs=Timsheet.SunHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text"  ng-model="Timsheet.SunHrs" class="ts-comment" value="{{BillableSundayHrs}}"/>-->
+										<i class="fa fa-pencil"  ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text"  ng-model="Timsheet.NBSunHrs" ng-blur="setTimeFormat($event.target.value,$index,'NBSunHrs')" class="ts-comment" ng-value="Timsheet.NBSunHrs" ng-init="Timsheet.NBSunHrs=Timsheet.NBSunHrs" ng-disabled="disableForLeave(Timsheet)"/>
+										<!--<input type="text"  ng-model="Timsheet.NBSunHrs" class="ts-comment" value="{{NonBillableSundayHrs}}" />-->
+										<i class="fa fa-pencil" ng-click="DisplayPopUp()" aria-hidden="true" ng-disabled="disableForLeave(Timsheet)"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								 <label class="ts-statusLabel ts-statusApproved">{{Timsheet.ProjectTimesheetStatus}}</label> 
+								  <label class="ts-statusLabel ts-statusApproved"></label> 
+							</td>
+							<td>
+								<div class="ts-hr-label">
+									<!--<button class="cancelTSBtn" ng-click="RemoveTimesheet($index)" ng-disabled="disableForLeave(Timsheet)" style="background-color: white !important;min-width: 2em !important;padding: 0px;border: 1px solid white !important;"><i class="fa fa fa-trash-o" aria-hidden="true" title="{{RemoveIconToolTip}}"></i></button>-->
+										<i class="fa fa fa-trash-o" aria-hidden="true" ng-click="RemoveTimesheet($index)"  title="{{RemoveIconToolTip}}" ng-if="Timsheet.ddlProject !=='Leave'"></i>
+										<i class="fa fa fa-trash-o" aria-hidden="true" title="You cannot delete this record" ng-if="Timsheet.ddlProject ==='Leave'"></i>
+								</div>
+							</td>
+						  </tr> 
+						  <!--Holiday timesheet Starts-->
+						  <tr  ng-show="HolidayTimesheetDiv">
+							<td>
+								<select id="cmbAll" class="ts-select">
+                                   <option value="" selected>Holiday</option>
+								</select>
+								<i class="fa fa-angle-down downSelect" aria-hidden="true"></i>
+								<br/>
+
+								<label class="ts-managerLabel">
+								 {{HolidayProjectManager}}
+								</label>
+							</td>
+							<td>
+								<select id="cmbAll" class="ts-select">
+                                   <option value="" selected>Fixed Holiday</option>
+								</select>
+								<i class="fa fa-angle-down downSelect" aria-hidden="true"></i>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label ts-hr-label1">
+										B 
+									</div>
+									<div class="ts-hr-label ts-hr-label1">
+										NB
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text" ng-readonly="true"  class="ts-comment" />
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text" ng-readonly="true"  class="ts-comment"  value="{{MondayHoliday}}" />
+										<i  class="fa fa-pencil" aria-hidden="true"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text"  ng-readonly="true" class="ts-comment"/>
+										<i class="fa fa-pencil"  aria-hidden="true"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text" ng-readonly="true" type="text" class="ts-comment"  value="{{TuesdayHoliday}}" />
+										<i class="fa fa-pencil"  aria-hidden="true"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text"  ng-readonly="true" class="ts-comment"   />
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text" ng-readonly="true" class="ts-comment" value="{{WednesdayHoliday}}" />
+										<i class="fa fa-pencil"  aria-hidden="true"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text" ng-readonly="true" class="ts-comment"  />
+										<i class="fa fa-pencil"  aria-hidden="true"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text"  ng-readonly="true" class="ts-comment" value="{{ThursdayHoliday}}" />
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text" ng-readonly="true" class="ts-comment" />
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text" ng-readonly="true" class="ts-comment" value="{{FridayHoliday}}" />
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text"  ng-readonly="true" class="ts-comment"  />
+										<i class="fa fa-pencil"  aria-hidden="true"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text" ng-readonly="true" class="ts-comment" value="{{SaturdayHoliday}}"/>
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label">
+										<input type="text"   ng-readonly="true" class="ts-comment" />
+										<i class="fa fa-pencil"  aria-hidden="true"></i>
+									</div>
+									<div class="ts-hr-label">
+										<input type="text"  ng-readonly="true" class="ts-comment" value="{{SundayHoliday}}" />
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+									</div>
+								</div>
+							</td>
+							<td>
+								 <label class="ts-statusLabel ts-statusApproved">Approved</label> 
+								  <label class="ts-statusLabel ts-statusApproved"></label> 
+							</td>
+							<td>
+								<i class="fa fa fa-trash-o" aria-hidden="true" title="You cannot delete this record"></i>
+							</td>
+						  </tr> 
+						  <!--Holiday timesheet end-->
+						  <tr class="totalRow">
+							<td style="border-bottom-left-radius: 6px!important;">
+							</td>
+							<td>
+								<input type="button" class="ts-addRowBtn" ng-click="AddNewTimesheet()" value="Add New" />
+							</td>	
+							<td>
+								<div class="ts-hr-labelBox ts-hr-labelBoxTotal">
+									<div class="ts-hr-label ts-hr-label1 ts-hrLabel1">
+										Total Hrs.
+									</div>
+									<div class="ts-hr-label ts-hr-label1 ts-hrLabel2">
+										Target
+									</div>
+								</div>
+							</td>	
+							<td>
+								<div class="ts-hr-labelBox">
+									<div  class="ts-hr-label ts-hr-labelTotal1">
+											 <!-- <span ng-bind="MonHrs">{{item.MonHrs + item.NBMonHrs}}</span>  -->
+											{{totalhours.TotalhrsMonday}}
+									</div>
+									<div class="ts-hr-label ts-hr-labelTotal2">
+										8
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label ts-hr-labelTotal1">
+										<!-- <span ng-bind="TueHrs"></span> -->
+										<!--{{item.MonHrs -- item.NBMonHrs}}  -->
+								 			{{totalhours.TotalhrsTuesday}}
+									</div>
+									<div class="ts-hr-label ts-hr-labelTotal2">
+										8
+									</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label ts-hr-labelTotal1">
+										<!-- <span ng-bind="WedHrs"></span> -->
+										{{totalhours.TotalhrsWednesday}}
+									</div>
+									<div class="ts-hr-label ts-hr-labelTotal2">
+										8
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label ts-hr-labelTotal1">
+										<!-- <span ng-bind="ThuHrs"></span> -->
+										{{totalhours.TotalhrsThursday}}
+									</div>
+									<div class="ts-hr-label ts-hr-labelTotal2">
+										8
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label ts-hr-labelTotal1">
+										<!-- <span ng-bind="FriHrs"></span> -->
+										{{totalhours.TotalhrsFriday}}
+									</div>
+									<div class="ts-hr-label ts-hr-labelTotal2">
+										8
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label ts-hr-labelTotal1">
+										<!-- <span ng-bind="SatHrs"></span> -->
+										{{totalhours.TotalhrsSaturday}}
+									</div>
+									<div class="ts-hr-label ts-hr-labelTotal2">
+										8
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox">
+									<div class="ts-hr-label ts-hr-labelTotal1">
+										<!-- <span ng-bind="SunHrs"></span> -->
+											{{totalhours.TotalhrsSunday}}
+									</div>
+									<div class="ts-hr-label ts-hr-labelTotal2">
+										8
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="ts-hr-labelBox ts-hr-labelBoxGrandTotal">
+									<div   class="ts-hr-label ts-hr-labelTotal1">
+										{{totalhours.TotalhrsTimesheet}}  &nbsp;&nbsp;-&nbsp;&nbsp; <label class="grandTotLabel">Grand Total</label>
+									</div>
+									<div class="ts-hr-label ts-hr-labelTotal2">
+										40
+									</div>
+								</div>
+							</td>
+							<td style="border-bottom-right-radius: 6px!important;">								
+							</td>	
+						  </tr>	
+						</tbody>
+					  </table>
+				</div>	
+				<!-- submit btns -->
+				<div class="ts-btns-row">
+					<span class="ts-noteText">Note : Time is in HH:MM format</span>
+					<input type="button" class="saveTSBtn" ng-click="SaveTimeSheet(TimesheetDivs)" value="Save Timesheet" />
+					<button class="sendTSBtn" ng-click="SubmitTimeSheet(TimesheetDivs)">Send For Approval</button>
+					<button class="cancelTSBtn"><a href="/SitePages/Angular%20My%20Timesheet.aspx">Cancel</a></button>
+				</div>
+				
+				</div>
+			</div>
+	</section>
+<modal visible="showModal">
+                  <div class="modal-header">
+				
+				<i class="material-icons close-icon" ng-click="cancel()">close</i>
+				<h4 class="modal-title">Write a Description</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea rows="6" class="ts-descrText form-control" ng-model="Description" id="Descriptiontext"></textarea>	
+                </div>
+                <!-- <button class="btn btn-primary" type="button" ng-click="RejectFunction(item)">OK</button>
+				<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button> --> 
+				<button type="button" class="saveDescrBtn" data-dismiss="modal" ng-click="SaveTimesheetDescriptionAndCancel(Description)">Save & Close</button> 						
+		  </div>
+		</div> 
+            </modal>
+  </div>
+</div>
+<script>
+	$(document).ready(function () {
+
+      var date = new Date();
+      var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      //var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+          
+
+      var date_input_start = $('input[name="dateStart"]'); //our date input has the name "date"
+     // var date_input_end = $('input[name="dateEnd"]'); //our date input has the name "date"
+      var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+      var options = {
+        format: 'dd/mm/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+        startDate: today,
+
+      };
+      date_input_start.datepicker(options);
+     // date_input_end.datepicker(options);
+
+    })
+</script>

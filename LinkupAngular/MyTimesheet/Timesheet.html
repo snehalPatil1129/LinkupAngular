@@ -1,0 +1,222 @@
+ <script src="/SiteAssets/Timesheet/angular.js"></script> 
+
+
+<!-- <script src="/SiteAssets/Files/angular.js"></script> -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-datepicker.min.js"></script> -->
+	
+	
+<!--Application-->
+<script src="/SiteAssets/Timesheet/spcrud.js"></script>
+<!-- <link rel="stylesheet" href="/SiteAssets/TimeSheet/MyTimesheet/Timesheet.css"></link>
+<script src="/SiteAssets/TimeSheet/MyTimesheet/Timesheet.js"></script> -->
+<!-- <link rel="stylesheet" href="/SiteAssets/TimeSheet/My-Timesheet/Timesheet.css"></link>
+<script src="/SiteAssets/TimeSheet/My-Timesheet/Timesheet.js"></script> -->
+
+<link rel="stylesheet" href="/SiteAssets/Timesheet/MyTimesheet/Timesheet.css"></link>
+<script src="/SiteAssets/Timesheet/MyTimesheet/Timesheet.js"></script>
+
+  <div ng-app="TimeSheetApp" class="appmodel">
+    <div ng-controller="TimeSheetCtl">
+        <div class="spinner" ng-hide="spinnerloaded"></div>
+        <span ng-hide="spinnerloaded">
+				Loading.....
+			</span>
+        <div ng-cloak="" ng-show="spinnerloaded">
+        
+        </div>
+    
+        <!-- </div> -->
+        <div >
+          <div class="main">
+              <div id="headerBox" class="col-md-14" ng-model='Count' style="margin-left: -233px;">
+                <div id="headerStatBox"  class="col-md-2" >
+                  <!-- style="margin-left: -226px;" -->
+                  <h1>{{Count.TotalCount}}</h1>
+                  <h3><a class="Link" href="" ng-click='getTimeSheetData()'>My Timesheets</a></h3>
+                </div>
+                <div id="headerStatBox" class="col-md-2" >
+                  <!-- style="margin-left: -108px;" -->
+                  <h1>{{Count.SubmittedCount}}</h1>
+                  <h3><a  class="Link" href="" ng-value="Submitted" ng-click='getTimeSheetData(Submitted)'>Submitted</a></h3>
+                </div>
+                <div id="headerStatBox" class="col-md-2">
+                  <h1>{{Count.ApprovedCount}}</h1>
+                  <h3><a class="Link" href="" ng-value="Approved" ng-click='getTimeSheetData(Approved)'>Approved</a></h3>
+                </div>
+                <div id="headerStatBox" class="col-md-2">
+                  <h1>{{Count.PendingCount}}</h1>
+                  <h3><a class="Link" href="" ng-value="Pending" ng-click='getTimeSheetData(Pending)'>Pending</a></h3>
+                </div>
+                <div id="headerStatBox" class="col-md-2">
+              <h1>{{Count.NSubmittedCount}}</h1>
+                  <h3><a class="Link" href="" ng-value="NotSubmitted" ng-click='getTimeSheetData(NotSubmitted)'>Not Submitted</a></h3>
+                </div>
+                 <div id="headerStatBox" class="col-md-2">
+              <h1>{{Count.PartiallyApprovedCount}}</h1>
+                  <h3><a class="Link" href="" ng-value="PartiallyApproved" ng-click='getTimeSheetData(PartiallyApproved)'>Partially Approved</a></h3>
+                </div>
+                <div id="headerStatBox" class="col-md-2">
+              <h1>{{Count.RejectedCount}}</h1>
+                  <h3><a class="Link" href="" ng-value="Rejected" ng-click='getTimeSheetData(Rejected)'>Rejected</a></h3>
+                </div>
+                </div>
+                 <div>
+                <input type="text" class="form-control" placeholder="Type to Search..." ng-model="filterText" ng-change='filterItems(filterText)'>
+                </div>
+              <div>
+            <select  class="alignShowFilter" ng-model="itemsPerPage" ng-change="showFIlter(itemsPerPage)" placeholder="Show"  ng-selected="10" >
+              <option ng-option value="10" >10</option> 
+              <option ng-option value="20">20</option>
+              <option ng-option value="40">40</option>  
+              <option ng-option value="100">100</option>
+          </select>
+              </div> 
+              
+            </div>    
+        </div>
+       
+
+ <div class="scrollTable">
+<table  id="myTable" class="table table-striped table-bordered table-hover table-checkable order-column" >
+  <tr class='blueback' style="height: 30px;"  >
+    <th >Edit</th>
+    <th >
+      <a class='TableLink' href="#" ng-click="sortType = 'Approver_x0020_User.results[0].Title'; sortReverse = !sortReverse">
+      Approver User
+      <span ng-show="sortType == 'Approver_x0020_User.results[0].Title' && !sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="sortType == 'Approver_x0020_User.results[0].Title' && sortReverse" class="fa fa-caret-up"></span>
+          </a></th>
+    <th>
+      <a class='TableLink' href="#" ng-click="sortType = 'Start_x0020_Date'; sortReverse = !sortReverse">
+      Start Date
+      <span ng-show="sortType == 'Start_x0020_Date' && !sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="sortType == 'Start_x0020_Date' && sortReverse" class="fa fa-caret-up"></span>
+          </a></th>
+    <th><a class='TableLink' href="#" ng-click="sortType = 'End_x0020_Date'; sortReverse = !sortReverse">
+      End Date
+      <span ng-show="sortType == 'End_x0020_Date' && !sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="sortType == 'End_x0020_Date' && sortReverse" class="fa fa-caret-up"></span>
+          </a></th>
+    <th>
+      <a class='TableLink' href="#" ng-click="sortType = 'Billable_x0020_Hours'; sortReverse = !sortReverse">
+      Billable Hours
+      <span ng-show="sortType == 'Billable_x0020_Hours' && !sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="sortType == 'Billable_x0020_Hours' && sortReverse" class="fa fa-caret-up"></span>
+          </a></th>
+    <th>
+      <a class='TableLink' href="#" ng-click="sortType = 'Non_x002d_Billable_x0020_Hours'; sortReverse = !sortReverse">
+      Non-Billable Hours
+      <span ng-show="sortType == 'Non_x002d_Billable_x0020_Hours' && !sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="sortType == 'Non_x002d_Billable_x0020_Hours' && sortReverse" class="fa fa-caret-up"></span>
+          </a></th>
+    <th>
+      <a class='TableLink' href="#" ng-click="sortType = 'Submitted_x0020_Status'; sortReverse = !sortReverse">
+      Status
+      <span ng-show="sortType == 'Submitted_x0020_Status' && !sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="sortType == 'Submitted_x0020_Status' && sortReverse" class="fa fa-caret-up"></span>
+          </a></th>
+    <th>
+      <a class='TableLink' href="#" ng-click="sortType = 'Timesheet_x0020_Submitted_x0020_'; sortReverse = !sortReverse">
+      Timesheet Submitted Date
+      <span ng-show="sortType == 'Timesheet_x0020_Submitted_x0020_' && !sortReverse" class="fa fa-caret-down"></span>
+      <span ng-show="sortType == 'Timesheet_x0020_Submitted_x0020_' && sortReverse" class="fa fa-caret-up"></span>
+          </a></th>
+  </tr>
+
+  <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sortType:sortReverse | limitTo: itemsPerPage:page-1  as filteredItems" ng-show="IsDefault">
+    <td><a href="/SitePages/AddEditTimeSheet.aspx" ><i class="material-icons">mode_edit</i></a></td>
+    <td style="text-align:left;"> &#9725; {{item.Approver_x0020_User.results[0].Title}} <br>
+       <p ng-if="item.Approver_x0020_User.results.length > 1"> &#9725;  {{item.Approver_x0020_User.results[1].Title}}</p><br>
+        <p ng-if="item.Approver_x0020_User.results.length > 2"> &#9725;  {{item.Approver_x0020_User.results[2].Title}}</p>
+    </td>
+    <td><span ng-bind="item.Start_x0020_Date | date:'dd/MM/yyyy'"></span></td>
+    <td><span ng-bind="item.End_x0020_Date |date:'dd/MM/yyyy'"></span></td>
+    <td>{{item.Billable_x0020_Hours}}</td>
+    <td>{{item.Non_x002d_Billable_x0020_Hours}}</td>
+    <td >{{item.Submitted_x0020_Status}}</td>
+    <td><span ng-bind="item.Timesheet_x0020_Submitted_x0020_ | date:'dd/MM/yyyy'"></span></td>
+  </tr> 
+</table>
+</div>
+<div class="scrollpaging"> 
+  <table class="table">
+    <tbody>
+      <tr class="pagination pull-right">
+        <!-- <td>Showing {{pagedItems[currentPage].length}}/{{DatalistEMPTimeSheet.length}}</td> -->
+        <td ng-class="{disabled: currentPage == 0}">
+          <a href ng-click="prevPage()">« Prev</a>
+        </td>
+        <td ng-repeat="n in range(pagedItems.length)" ng-class="{active: n == currentPage}" ng-click="setPage()">
+          <a href ng-bind="n + 1">1</a>
+        </td>
+        <td ng-class="{disabled: currentPage == pagedItems.length - 1}">
+          <a href ng-click="nextPage()">Next »</a>
+        </td>
+      </tr>
+    </tbody> 
+  </table>   
+</div>  
+        
+    </div>           
+</div>
+<script>
+		
+				var modalVerticalCenterClass = ".modal";
+				
+				function centerModals($element) {
+					var $modals;
+					if ($element.length) {
+						$modals = $element;
+					} else {
+						$modals = $(modalVerticalCenterClass + ':visible');
+					}
+					$modals.each( function(i) {
+						var $clone = $(this).clone().css('display', 'block').appendTo('body');
+						var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+						top = top > 0 ? top : 0;
+						$clone.remove();
+						$(this).find('.modal-content').css("margin-top", top);
+					});
+				}
+				$(modalVerticalCenterClass).on('show.bs.modal', function(e) {centerModals($(this));});
+				$(window).on('resize', centerModals);
+				
+	
+			
+		
+	</script>
+<!-- <div class="floating-box">
+            <div>
+               <h2>{{Count.TotalCount}}</h2>
+              <h4><a class="Link" href="" ng-click='getAllTimeSheetData()'>MyTimesheet</a></h4>
+            </div>
+          </div>
+          <div class="floating-box">
+            <div>
+              <h2>{{Count.SubmittedCount}}</h2>
+              <h4><a  class="Link" href="" ng-click='getSubmittedTimeSheetData(SingleUserTimeSheets)'>Submitted</a></h4>
+            </div>
+          </div>
+          <div class="floating-box">
+            <div>
+              <h2>{{Count.ApprovedCount}}</h2>
+              <h4><a class="Link" href="" ng-click='getApprovedTimeSheetData(SingleUserTimeSheets)'>Approved</a></h4>
+            </div>
+          </div>
+          <div class="floating-box">
+            <div>
+              <h2>{{Count.PendingCount}}</h2>
+              <h4><a class="Link" href="" ng-click='getPendingTimeSheetData(SingleUserTimeSheets)'>Pending</a></h4>
+            </div>
+          </div>
+          <div class="floating-box">
+            <div>
+              <h2>{{Count.NSubmittedCount}}</h2>
+              <h4><a class="Link" href="" ng-click='getNSubmittedTimeSheetData(SingleUserTimeSheets)'>Not Submitted</a></h4>
+            </div>
+          </div> -->

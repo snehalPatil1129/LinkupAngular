@@ -1,0 +1,203 @@
+table {
+    font-family: 'Segoe UI' !important;
+    font-weight: 500 !important;
+    border-collapse: collapse;
+    width: 100%;
+  
+}
+
+td, th {
+    /* border: 1px solid #dddddd; */
+    text-align: center;
+    padding: 8px;
+
+}
+.blueback{
+    background-color:rgba(42, 136, 214, 0.91) !important;
+    color: white;
+}
+
+
+.spinner {
+    display: inline-block;
+    border-radius: 50px;
+    border-style: solid;
+    border-bottom-color: #3b5641;
+    border-top-color: #67b3a9;
+    border-left-color: #df7950;
+    border-right-color: #decb3f;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    animation: rotate360 1s linear infinite;
+    -webkit-animation: rotate360 1s linear infinite;
+    border-width: 4px;
+    width: 24px;
+    height: 24px;
+}
+
+
+    
+h4, h4 {
+    font-size: 22px;
+}
+
+.h4, .h5, .h6, h4, h5, h6 {
+    margin-top: -18px;
+    margin-bottom: 23px;
+}
+.ms-wpContentDivSpace div {
+    margin-top: -10px!important;
+}
+ .TableLink {
+    color: white!important;
+    text-decoration: none;
+} 
+.Link{
+    color:black!important;
+    text-decoration:none;
+}
+
+ TableLink:visited {
+     color: white!important;
+    text-decoration: none;
+} 
+.pageing {
+    margin-right: 20px !important;
+}
+.frm {
+    display: block;
+    width: 23%;
+    height: 30px;
+}
+input[type=password], input[type=text], input[type=file], textarea, .ms-inputBox {
+    padding: 16px 11px;
+}
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 28px;
+    margin-bottom: 10px;
+}
+.main{
+	padding-left: 15em;
+    padding-top: 3em;
+	padding-right: 2em;
+}
+
+#headerStatBox{
+	width: 10%;
+    box-shadow: 0 0px 20px rgba(152, 152, 152, 0.36);
+    padding: 0px;
+    float: left;
+     margin-right: 5px; 
+	border-radius: 3px;
+    cursor:pointer;
+    height: 75px;
+    
+  
+    
+}
+#headerStatBox h1{
+	margin-top: 0;
+    font-weight: 600;
+    color: #0072C6;
+    font-size: 20px;
+    letter-spacing: -2px;
+    text-shadow: 0px 1px 2px rgba(0,0,0,0.3);
+}
+#headerStatBox h3{
+	margin-top: 0;
+    font-weight: 500;
+    color: #000;
+    font-size: 14px;
+    letter-spacing: 0px;
+	margin-bottom:0;
+}
+#headerStatBox.active{
+	width: 18%;
+    box-shadow: 0 0px 20px rgba(152, 152, 152, 0.36);
+    padding: 15px;
+    float: left;
+    margin-right: 15px;
+    background:#0072C6;
+    margin-left: -85px;
+}
+#headerStatBox.active h2{
+	margin-top: 0;
+    font-weight: 600;
+    color: #fff;
+    font-size: 30px;
+    letter-spacing: -2px;
+    text-shadow: 0px 1px 2px rgba(0,0,0,0.3);
+}
+#headerStatBox.active h4{
+	margin-top: 0;
+    font-weight: 500;
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: 0px;
+	margin-bottom:0;
+}
+/* .ms-wpContentDivSpace div {
+    margin-top: 12px!important;
+    margin-bottom: 5px;
+}
+input[type=text], input[type=file], textarea, .sp-peoplepicker-topLevel, .ms-inputBox {
+  
+    margin-top: -4px;
+    margin-left: 0px;
+   
+} */
+ .alignShowFilter {
+      height: 34px;
+    margin-left: 300px;
+    margin-bottom: 16px;
+    width: 97px;
+    margin-right: -436px;
+    margin-top: -34px;
+}
+
+.form-control{
+        width: 165px;
+    margin-top: 31px;
+    margin-bottom: 10px;
+}
+.scrollTable {
+    min-height: 465px !important;
+    max-height: 465px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    float: left;
+    width: 1131px;
+}
+.table{
+    font-size: 12px !important;
+    font-weight: 400;
+    padding: 4px !important;
+    padding-bottom: 3px !important;
+}
+.ms-WPBody td{
+    padding-bottom: 3px !important;
+}
+.topMarginn{
+    margin-top: -30px !important;
+}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 7px !important;
+}
+.table >thead>tr{
+   background-color:rgba(42, 136, 214, 0.91) !important;
+    color: white;
+}
+th{
+   background-color:rgba(42, 136, 214, 0.91) !important;
+   color: white !important;
+}
+.material-icons
+{
+        font-size: 18px;
+
+}
+/* td
+{
+    text-align: left;
+} */

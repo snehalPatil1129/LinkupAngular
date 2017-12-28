@@ -1,0 +1,189 @@
+.row-padding {
+    padding: 10px;
+}
+
+.btn-align {
+    float: right;
+}
+.icon-color {
+    color :#3D79A2;
+}
+.week-header {
+    font-size: 25px;
+    font-weight: 100;
+    letter-spacing: -1px;
+    /*//font-family: 'Segoe UI'!important;*/
+}
+.status-header{
+    font-size: 18px;
+    font-weight: 400;
+    color: #207BCA!important;
+}
+.charsLeft{
+    margin: 0px 0px -5px;
+    background-color: #F8F3C9;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-left: 1px dotted #ababab;
+    border-top: 1px dotted #ababab;
+}
+.fullWidth{
+    width: 100%;
+}
+.blueback{
+    background-color:rgba(42, 136, 214, 0.91) !important;
+    color: white;
+}
+.scrollpaging {
+    max-height: 90px;
+    min-width: 1130px !important;
+    max-width: 1130px !important;
+    overflow-y: hidden;
+    overflow-x: auto;
+    margin-top: -10px;
+}
+
+.scrollTable {
+    min-height: 340px !important;
+    max-height: 340px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.table{
+    font-size: 12px !important;
+    padding: 4px !important;
+    padding-bottom: 3px !important;
+}
+.ms-WPBody td{
+    padding-bottom: 3px !important;
+}
+.table>thead>tr>th {
+    padding: 4px !important;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+.spinner {
+    display: inline-block;
+    border-radius: 50px;
+    border-style: solid;
+    border-bottom-color: #3b5641;
+    border-top-color: #67b3a9;
+    border-left-color: #df7950;
+    border-right-color: #decb3f;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    animation: rotate360 1s linear infinite;
+    -webkit-animation: rotate360 1s linear infinite;
+    border-width: 4px;
+    width: 24px;
+    height: 24px;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+.cancelBtn {
+    border-radius: 3px!important;
+    font-family: "Open Sans", sans-serif;
+    background: #fb5557;
+    border-color: #fb5557;
+    color: #fff!important;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 5px 12px;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: 0.3s all ease-out;
+    float:left;
+}
+
+.cancelBtn:hover {
+    background: #fb5557;
+    border-color: #fb5557;
+    color: #fff!important;
+}
+.saveBtn {
+    border-radius: 3px!important;
+    font-family: "Open Sans", sans-serif;
+    background: #01b070;
+    border-color: #01b070;
+    float:right;
+    color: #fff!important;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 5px 12px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom:5px; 
+    transition: 0.3s all ease-out;
+}
+
+.saveBtn:hover {
+    background: #01b070;
+    border-color: #01b070;
+    color: #fff!important;
+}
+.thclass {
+    padding: 4px !important;
+    font-size: 12px !important;
+    color: white !important;
+    background-color: rgba(42, 136, 214, 0.91) !important;
+}
+
+.badge {
+    background: #f3565d !important;
+}
+.badge.badge-success {
+background-color: #45b6af !important;
+}
+.cancelModal{
+    min-width: 1em !important;
+    margin-top: -16px !important;
+    padding-top: 3px !important;
+    height: 30px !important;
+    float: right !important;
+}
+.bulkapprovebtn{
+    margin-top: -16px;
+    margin-bottom: 9px;
+    height: 38px;
+    width: 125px;
+    font-size: 17px;
+    
+
+}

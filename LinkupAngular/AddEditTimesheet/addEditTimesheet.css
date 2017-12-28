@@ -1,0 +1,73 @@
+.week-header {
+    font-size: 25px;
+    font-weight: 100;
+    letter-spacing: -1px;
+    /*//font-family: 'Segoe UI'!important;*/
+}
+.status-header{
+    /*font-size: 18px;*/
+    font-size: 25px;
+    font-weight: 400;
+    white-space: nowrap;
+    color: #207BCA!important;
+}
+.input-group-addon{
+    cursor: pointer;
+}
+.fa-caret{
+    color: black;
+}
+.target-row{
+    color:red;
+}
+.hide-td-border>td{
+    border-top: none;
+}
+.hours-input{
+    width: 35px;
+    height: 20px;
+    text-align: right;
+}
+.edit-icon{
+    font-size: 17px;
+    margin-top: 3px;
+    cursor: pointer;
+}
+.table-responsive{
+    overflow-x: visible;
+}
+.notes-text{
+    width: 400px;
+    height: 150px;
+    max-width: 400px;
+    max-height: 150px;
+}
+.fa-times{
+    font-size: 32px;
+    position: absolute;
+    color:red;
+    cursor:pointer;
+    margin-top: 21px;
+}
+
+.fa-check-square-o{
+    color: #2399e5;
+}
+.input-width{
+    width:100px
+}
+.badge badge-danger{
+        background-color: red!important;
+}
+.fa fa-graduation-cap{
+     background-color: red!important;
+}
+.fa fa-money
+{
+     background-color: red !important;
+}
+.badge badge-success
+{
+     background-color:lightseagreen!important;
+}
+ 

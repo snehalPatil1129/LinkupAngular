@@ -1,0 +1,326 @@
+.viewMoreBtn {
+    border-radius: 3px!important;
+    font-family: "Open Sans", sans-serif;
+    background: #fb5557;
+    border-color: #fb5557;
+    color: #fff!important;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 2px 12px;
+    font-weight: 600;
+    margin-top: -5px;
+    transition: 0.3s all ease-out;
+}
+
+.viewMoreBtn:hover {
+    background: #01b070;
+    border-color: #01b070;
+    color: #fff!important;
+}
+
+.viewMoreBtn i {
+    margin-right: 3px;
+}
+
+.scrollTable {
+    margin-top: 0px !important;
+    min-height: 465px !important;
+    max-height: 465px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.spinner {
+    display: inline-block;
+    border-radius: 50px;
+    border-style: solid;
+    border-bottom-color: #3b5641;
+    border-top-color: #67b3a9;
+    border-left-color: #df7950;
+    border-right-color: #decb3f;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    animation: rotate360 1s linear infinite;
+    -webkit-animation: rotate360 1s linear infinite;
+    border-width: 4px;
+    width: 24px;
+    height: 24px;
+}
+
+.masterHeading {
+    margin-top: -20;
+    margin-bottom: 15px;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 0.6 !important;
+}
+
+.spantag {
+    color: #777;
+}
+
+#buttons {
+    margin-top: 10px;
+}
+
+.modal-content {
+    height: 445px;
+    margin: auto;
+    border: 1px;
+}
+
+.pageing {
+    margin-right: 20px !important;
+}
+
+.scrollpaging {
+    max-height: 90px;
+    min-width: 1130px !important;
+    max-width: 1130px !important;
+    overflow-y: hidden;
+    overflow-x: auto;
+    margin-top: -10px;
+}
+
+.modal-backdrop {
+    display: none;
+}
+
+.modal-open .modal {
+    width: 300px;
+    margin: 0 auto;
+}
+.modalHead {
+    color: rgba(42, 136, 214, 0.91) !important;
+    margin-top:-20px !important;
+    margin-bottom: -10px !important;
+}
+.scrollModal {
+    min-height: 600px !important;
+    max-height: 600px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.frm {
+    display: block;
+    width: 23%;
+    height: 34px;
+}
+
+.commentBtn {
+    border-radius: 3px!important;
+    font-family: "Open Sans", sans-serif;
+    background: rgba(42, 136, 214, 0.91) !important;
+    border-color: rgba(42, 136, 214, 0.91) !important;
+    color: #fff!important;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 5px 12px;
+    font-weight: 600;
+    margin-top: -16px;
+    float: right;
+    transition: 0.3s all ease-out;
+}
+
+.commentBtn:hover {
+    background: rgba(42, 136, 214, 0.91) !important;
+    border-color: rgba(42, 136, 214, 0.91) !important;
+    color: #fff!important;
+} 
+.commentBtnHide {
+    border-radius: 3px!important;
+    font-family: "Open Sans", sans-serif;
+    background: rgba(42, 136, 214, 0.91) !important;
+    border-color: rgba(42, 136, 214, 0.91) !important;
+    color: #fff!important;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 5px 12px;
+    font-weight: 600;
+    margin-top: -16px;
+    float: right;
+    transition: 0.3s all ease-out;
+} 
+
+.commentBtnHide:hover {
+    background: rgba(42, 136, 214, 0.91) !important;
+    border-color: rgba(42, 136, 214, 0.91) !important;
+    color: #fff!important;
+}
+.cancelBtn {
+    border-radius: 3px!important;
+    font-family: "Open Sans", sans-serif;
+    background: #fb5557;
+    border-color: #fb5557;
+    color: #fff!important;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 5px 12px;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: 0.3s all ease-out;
+}
+
+.cancelBtn:hover {
+    background: #fb5557;
+    border-color: #fb5557;
+    color: #fff!important;
+}
+.saveBtn {
+    border-radius: 3px!important;
+    font-family: "Open Sans", sans-serif;
+    background: #01b070;
+    border-color: #01b070;
+    color: #fff!important;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 5px 12px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom:5px; 
+    transition: 0.3s all ease-out;
+}
+
+.saveBtn:hover {
+    background: #01b070;
+    border-color: #01b070;
+    color: #fff!important;
+}
+.table{
+    font-size: 12px !important;
+    font-weight: 400;
+    padding: 4px !important;
+    padding-bottom: 3px !important;
+}
+.ms-WPBody td{
+    padding-bottom: 3px !important;
+}
+.topMarginn{
+    margin-top: -30px !important;
+}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 2px !important;
+}
+/* .table thead tr th {
+    font-size: 12px;
+} */
+.showFilter{
+    margin-top: -35px !important;
+    margin-left: 310px !important;
+}
+/* #alignShowFilter {
+    width: 144px !important;
+    height: 30px !important;
+    margin-left: 398px;
+    margin-top: -34px;
+} */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+.badge-danger {
+    background-color: #f3565d;
+    background-image: none;
+}
+.badge-success {
+    background-color: #45b6af;
+    background-image: none;
+}
+label {
+    display: inline-block;
+    max-width: 90%;
+    margin-bottom: 10px;
+    font-weight: 200 !important;
+    margin-top: 10px;
+    font-size: small;
+    
+}
+.badge {
+    background: #f3565d !important;
+}
+.badge.badge-success {
+background-color: #45b6af !important;
+}
+mytab
+{
+    margin-top: 5px;
+}
+.table {
+    width: 95%; 
+    /* max-width: 100%; */
+    margin-bottom: 20px;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+#myTable
+{
+    width: 95%;
+}
+.ms-wpContentDivSpace textarea {
+    margin-top: 2px !important;
+}
+.form-control{
+    width: 50%;
+    height: 27px !important;
+    padding: 3px  !important;
+    font-size: 12px;
+}
+.row{
+    margin-left: 1px !important;
+}
+.MyRow{
+    font-size: 12px !important;
+    /* align-items: center; */
+    text-align: center;
+    font-weight: 300;
+}
+#dateEnd{
+    width: 134px;
+    height: 27px !important;
+    font-size: 13px;
+}
+#dateStart{
+    width: 134px;
+    height: 27px !important;
+    font-size: 13px;
+}
