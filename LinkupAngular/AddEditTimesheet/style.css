@@ -1,0 +1,446 @@
+body{
+	overflow-x:hidden!important;
+	font-family: Roboto!important;	
+	background:#fff;
+}
+.ts-main{
+	padding-left: 15em;
+    padding-top: 3em;
+	padding-right: 2em;
+}
+
+
+.ts-status{
+    /*color: #fff;
+    padding: 3px 15px;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 24px;
+    font-weight: 500;*/
+	
+	color: #fff;
+    padding: 5px 15px;
+    font-size: 11px;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: 500;
+    font-family: Arial;
+    margin-left: 25px;
+    margin-top: 0px;
+    float: right;
+}
+.ts-approved{
+	background:#50B432;
+}
+.ts-pending{
+	background:#ED561B;
+}
+.ts-not-submitted{
+	background:#DDDF00;
+}
+.ts-submitted{
+	background:#24CBE5;
+}
+.ts-partially-approved{
+	background:#64E572;
+}
+.ts-rejected{
+	background:#FF9655;
+}
+
+.ts-week{
+	color: #313131;
+    font-size: 22px;
+    margin-top: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-family: Poppins;
+}
+.icon-arrow-box{
+	padding: 8px 12px;
+	cursor:pointer;
+	background: linear-gradient(#2a90b3, #337ab7);
+}
+.icon-arrow-box i{
+	color:#fff;
+}
+.icon-label-box{
+	padding: 10px 25px;
+	background:#fff;
+	font-weight:600;
+	color:#000;
+	text-transform:uppercase;
+}
+.arrow-box{
+	width: 250px;
+    float:left;
+}
+.ts-date{
+	height: 33px;
+    border: 1px solid #ddd;
+	padding: 3px 7px;
+	outline:none!important;
+	margin: auto -3px;
+    margin-right: -4px;
+	border-radius: 0px!important;
+	border-left: none;
+    border-right: none;
+}
+.leftArrow{
+	border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.rightArrow{
+	border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.dateIcon{
+	position: absolute;
+    margin-left: -26px;
+    margin-top: 9px;
+}
+.datepicker.dropdown-menu th, .datepicker.dropdown-menu td{
+	font-family: Roboto!important;		
+}
+.ts-copyBtn{
+	background: linear-gradient(#2a90b3, #337ab7);
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+    font-size: 12px;
+    padding: 2px 15px;
+    height: 33px;
+    font-weight: 500;
+	margin-left: 10px;
+}
+.ts-copyBtn i{
+	vertical-align:middle!important;
+	font-size: 16px!important;
+}
+.ts-dateBox{
+	float: right;
+    padding-top: 20px;
+}
+.ts-table tr th{
+	/*background: #f5f5f5;*/
+	background: #3c91d6;	
+    padding-top: 15px!important;
+    padding-bottom: 15px!important;
+    vertical-align: middle!important;
+    font-size: 12px;
+    font-weight: 600;
+    /*color: #292929;*/
+	color: #fff;
+    border-bottom: none!important;
+    font-family: Poppins;
+}
+.ts-table tr th:first-child{
+	width:200px;
+	
+}
+.ts-table tr th:nth-child(2){
+	width:170px;
+}
+.ts-table tr th:nth-child(3){
+	width:90px;
+}
+.ts-table tr th:nth-child(4), .ts-table tr th:nth-child(5), .ts-table tr th:nth-child(6), .ts-table tr th:nth-child(7), .ts-table tr th:nth-child(8), .ts-table tr th:nth-child(9), .ts-table tr th:nth-child(10) {
+	width:90px;
+}
+.ts-table tr th:nth-child(11){
+	width:150px;
+}
+.ts-table tr th:last-child{
+	width:120px;
+}
+.ts-select {
+	font-weight: 400;
+    font-size: 13px;
+    margin-left: 0px;
+    border: none;
+    border-bottom: 2px solid #317bb4;
+    border-radius: 0px;
+    padding: 8px 5px;
+    padding-right: 20px;
+    outline: none!important;
+    cursor: pointer;
+    background: #f5f5f5;
+    max-width: 150px;
+    width: 150px;
+	
+	box-shadow: 2px 2px 6px 0px rgba(194, 194, 194, 0.57);
+	-webkit-box-shadow: 2px 2px 6px 0px rgba(194, 194, 194, 0.57);
+}
+select {
+    -webkit-appearance: none!important;
+    -moz-appearance: none!important;
+	appearance: none!important;
+}
+select::-ms-expand {
+    display: none;
+}
+.downSelect{
+	position: absolute;
+    font-size: 18px!important;
+    margin-left: -20px;
+    margin-top: 8px;
+    color: #000;
+}
+
+.ts-table tr td{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    vertical-align: middle!important;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+	border-bottom: 1px solid #f1f1f1;
+}
+.ts-hr-label{
+	width: 50px;
+    height: 28px;
+    margin-bottom: 10px;
+}
+.ts-hr-labelBox{
+	width:50px;	
+	padding-top: 10px;
+}
+.ts-comment{
+	width: 38px;
+    max-width: 38px;
+    height: 30px;
+    font-size: 11px;
+    text-align: center;
+    border-radius: 2px;
+    border: 1px solid #d8d8d8;
+}
+.ts-hr-label1{
+	padding-top: 7px;
+}
+.ts-hr-label i{
+	position: absolute;
+    margin-left: 6px;
+    margin-top: 7px;
+    cursor: pointer;
+    color: #484646;
+}
+.ts-statusLabel{
+	margin-bottom: 0;
+    font-weight: 600;
+    color: #403f3f;
+    font-size: 11px;
+	font-family:Poppins;
+}
+.ts-statusApproved{
+	color:#50B432;
+}
+.ts-statusPending{
+	color:#ED561B;
+}
+.ts-statusNotSubmitted{
+	color:#DDDF00;
+}
+.ts-statusSubmitted{
+	color:#24CBE5;
+}
+.ts-statusPartiallyApproved{
+	color:#64E572;
+}
+.ts-statusRejected{
+	color:#FF9655;
+}
+.ts-removeLink{
+	margin-bottom: 0;
+    font-weight: 700;
+    color: #e04d4d!important;
+    font-size: 11px;
+    font-family: Poppins;
+}
+.ts-removeLink i{
+	font-size: 18px;
+	vertical-align:middle;
+	margin-right:2px;
+}
+.ts-managerLabel{
+	position: absolute;
+    font-size: 11px;
+    color: #292929;
+    font-weight: 500;
+    margin-bottom: 0;
+    margin-top: 8px;
+}
+.ts-managerLabel img{
+	width: 14px;
+    margin-right: 3px;
+}
+.ts-hr-labelBoxTotal{
+	width:auto!important;
+}
+.ts-hr-labelBoxTotal .ts-hr-label {
+	width: auto!important;
+    text-transform: uppercase;
+    font-size: 11px;
+	font-weight: 600;
+}
+.ts-hrLabel1{
+	color:grey;
+}
+.ts-hrLabel2{
+	color: #CC0000!important;
+}
+.ts-hr-labelTotal1{
+	padding-top: 5px;
+    font-size: 14px;
+}
+.ts-hr-labelTotal2{
+	padding-top: 5px;
+    font-size: 14px;
+	color: #CC0000!important;
+}
+.ts-hr-labelBoxGrandTotal{
+	width:auto!important;
+}
+.ts-hr-labelBoxGrandTotal .ts-hr-label{
+	width:auto!important;
+}
+.grandTotLabel{
+	text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 600;
+	color: #000!important;
+}
+.totalRow td{
+	background:#f2f2f2!important;
+	padding-top: 5px!important;
+    padding-bottom: 5px!important;
+}
+.ts-addRowBtn{
+	background: linear-gradient(#2a90b3, #337ab7);
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+    font-size: 12px;
+    padding: 2px 15px;
+    height: 33px;
+    font-weight: 500;
+}
+.ts-addRowBtn i{
+	font-size: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-top: -2px;
+}
+.ts-noteText{
+	/*background: #f1f1f1;
+    font-weight: 500;
+    padding: 3px 15px;
+    font-size: 11px;
+    text-align: center;
+    border-radius: 2px;
+    font-weight: 500;
+    border: 1px solid #f1f1f1;
+    float: right;*/
+	
+    background: #e0e0e0;
+    color: #2b2b2b;
+    padding: 3px 15px;
+    font-size: 11px;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: 600;
+    border: none;
+    float: left;
+	
+}
+.ts-table{
+	margin-top:15px;
+}
+.ts-descrText{
+	resize:none;
+	box-shadow:none!important;
+	border-radius:0!important;
+}
+.ts-descrText:focus{
+	border-color:grey;
+}
+.close-icon {
+    position: absolute;
+    float: right;
+    right: 15px;
+    font-size: 25px!important;
+    margin-top: -1px;
+    color: #fff;
+    cursor: pointer;
+}
+.ts-descr-modal .modal-header {
+    min-height: 16.43px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;    
+	background: #337ab7;
+    color: #fff;
+	font-family: Poppins;
+}
+.saveDescrBtn{
+	background: linear-gradient(#2984a2, #337ab7);
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+    font-size: 12px;
+    padding: 2px 15px;
+    height: 33px;
+    font-weight: 500;
+}
+.ts-btns-row{
+	text-align:right;
+}
+.ts-btns-row button{
+	/*background: linear-gradient(#2984a2, #337ab7);
+    color: #fff;*/
+    border-radius: 4px;
+    border: none;
+    font-size: 13px;
+    padding: 2px 15px;
+    height: 35px;
+    font-weight: 500;
+	margin-left:5px;
+}
+.ts-descr-modal .modal-content{
+	border-radius:0!important;
+	border:none!important;
+}
+.ts-check{
+	margin-right: 5px;
+    margin-top: -3px;
+}
+.totalRow td{
+	border:none!important;
+}
+
+.saveTSBtn{
+	background: #5CB85C;
+	color:#fff;
+}
+.sendTSBtn{
+	background: #337AB7;
+	color:#fff;
+}
+.cancelTSBtn{
+	background: #ddd;
+    color: #000;
+    border: 1px solid #ddd!important;
+}
+.fillerDescr{
+	background: #c1f5c1;
+    border-color: #05d005;
+}
+.ts-comment{
+	box-shadow:none!important;
+}
+.ts-comment:focus{
+	border-color:#bbb!important;
+}
+@media (max-width:1400px){
+	.ts-select {
+		width: 135px;
+	}
+}

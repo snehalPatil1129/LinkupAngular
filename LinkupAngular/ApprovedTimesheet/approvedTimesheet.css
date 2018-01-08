@@ -294,3 +294,33 @@ textarea.form-control{
     overflow-x: auto;
     margin-top: -10px;
 }
+h5{
+    float: left;
+    color: red;
+    width: 210px;
+    margin-top: 0px;
+}
+label {
+    display: inline-block;
+    max-width: 216%;
+    margin-bottom: -22px;
+    font-weight: 500 !important;
+    margin-top: 10px;
+    font-size: small;
+    text-align: left;
+    margin-left: -178px;
+}
+
+.col-md-3{
+    margin-top: -9px !important;
+}
+.col-md-2{
+    margin-top: -9px !important;
+}
+.col-md-1{
+    margin-top: -9px !important;
+}
+.col-md-12{
+    margin-top: -9px !important;
+    margin-left: -28px !important;
+}

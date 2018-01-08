@@ -13,7 +13,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
 <!--Application-->
-<div ng-app="ApproveTimesheetApp" claass="appmodel">
+<div ng-app="ApproveTimesheetApp" class="appmodel">
     <div ng-controller="ApproveTimesheetCtl">
         <div class="spinner" ng-hide="spinnerloaded"></div>
         <span ng-hide="spinnerloaded">
@@ -36,9 +36,7 @@
                         <th class="thclass">Pending Approver</th>
                         <th class="thclass">Timesheet Submitted Date</th>
                     </tr>
-                    <tr ng-show="Rec">
-                <p ng-show="Rec"> No Records Found </p>
-            </tr>
+                    <tr ng-show="Rec"> No Records Found </tr>
                     <tr ng-repeat="item in pagedItems[currentPage]" ng-if="item.Submitted_x0020_Status != 'Approved' ">
                         <td><input type="checkbox"ng-model="departmentChecked" ng-checked="selectedAll"  ng-click="submit(departmentChecked ,item.ID ,item)"  ></td>
                         <td><i class="fa fa-edit" style="cursor: pointer;" ng-click="ShowModal(item)"></i></td>

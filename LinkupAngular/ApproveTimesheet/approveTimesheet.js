@@ -1213,10 +1213,16 @@ function ApproveTimesheetCtl($scope, $http, $window) {
                 console.log('error', error);
             });
         }
+        alert("Approved successfully.");
         $window.location.reload();
     }
+////////////////////////////////////////////////////////////////////////////////////
 
-    vm.Reject = function (comment) {
+vm.Reject = function (comment) {
+    if (comment == undefined || comment == null || comment == "") {
+        alert("Please Add Comment");
+    }
+    else {
         for (i = 0; i < vm.TimeSheetPopUp.length; i++) {
             var Id = vm.TimeSheetPopUp[i].Id;
             //var Id = vm.DatalistTimeSheet.Id;
@@ -1264,17 +1270,18 @@ function ApproveTimesheetCtl($scope, $http, $window) {
                             rejectedTimesheetsCount = rejectedTimesheetsCount + 1;
                         }
                     });
-                    spcrud.update($http, vm.EmployeeTimeSheetList, timesheetId, {
-                        'Project_x0020_Timesheet_x0020_St': 'Rejected',
-                        'Submitted_x0020_Status': 'Rejected',
-                        'Approver_x0020_Comment': comment
-                    }).then(function (response) {
-                        if (response.status === 204) {
+                    ///////////////////////Snehal SSSS//////////////////
+                    // spcrud.update($http, vm.EmployeeTimeSheetList, timesheetId, {
+                    //     'Project_x0020_Timesheet_x0020_St': 'Rejected',
+                    //     'Submitted_x0020_Status': 'Rejected',
+                    //     'Approver_x0020_Comment': comment
+                    // }).then(function (response) {
+                    //     if (response.status === 204) {
 
-                        }
-                    }, function (error) {
-                        console.log('error', error);
-                    });
+                    //     }
+                    // }, function (error) {
+                    //     console.log('error', error);
+                    // });
                     vm.AllTimesheetOfEmployee.forEach(f => {
                         if (f.Project_x0020_Timesheet_x0020_St == "Submitted") {
                             spcrud.update($http, vm.TimeSheetList, f.Id, {
@@ -1417,7 +1424,7 @@ function ApproveTimesheetCtl($scope, $http, $window) {
                                         var myJSON = JSON.stringify(FinYearResponse.data.d.results);
                                     vm.FinYear = FinYearResponse.data.d.results[0];
                                     currentFinancialYear = vm.FinYear.Title;
-                                   // console.log(vm.FinYear);
+                                    // console.log(vm.FinYear);
                                     var leavesFilter = '(Year eq \'' + currentFinancialYear + '\' ) and (Employee_x0020_ID eq \'' + emptimesheet.Title + '\' )';
                                     var leavesFilterOptions = {
                                         filter: leavesFilter
@@ -1429,7 +1436,7 @@ function ApproveTimesheetCtl($scope, $http, $window) {
                                         if (empLeavesResponse.status === 200)
                                             var myJSON = JSON.stringify(empLeavesResponse.data.d.results);
                                         vm.employeeLeavesMasterData = empLeavesResponse.data.d.results[0];
-                                       // console.log('Employee Leaves Master', vm.employeeLeavesMasterData);
+                                        // console.log('Employee Leaves Master', vm.employeeLeavesMasterData);
                                         if (angular.equals(EmpDesignation.toLowerCase(), "trainee")) {
                                             vm.employeeLeavesMasterData.Year_x0020_Start_x0020_Date = vm.FinYear.Start_x0020_Date;
                                             vm.employeeLeavesMasterData.Year_x0020_End_x0020_Date = vm.FinYear.End_x0020_Date;
@@ -1473,7 +1480,7 @@ function ApproveTimesheetCtl($scope, $http, $window) {
                                                 vm.PendingApproverArray = '';
                                                 vm.employeeTimesheet.Pending_x0020_ApproverId.results = vm.pendingApproverId;
                                                 vm.employeeTimesheet.Pending_x0020_Approver.results = vm.pendingApprover;
-                                               // console.log('emp', vm.employeeTimesheet);
+                                                // console.log('emp', vm.employeeTimesheet);
                                                 vm.PendingApproverArray = ({ results: vm.pendingApprover });
                                                 vm.PendingApproverIDArray = ({ results: vm.pendingApproverId });
                                                 //, __metadata: {type:"Collection(Edm.Int32)"}
@@ -1512,17 +1519,369 @@ function ApproveTimesheetCtl($scope, $http, $window) {
                         }
 
                     }
+                    ////////////////////////////////////////////////////////////////////////////////////
 
-                   // alert("Rejected successfully.");
+                    vm.pendingApproverId = [];
+                    vm.employeeTimesheet.Pending_x0020_ApproverId.results.forEach(item => {
+                        if (item != vm.CurrentLoggedInUserId) {
+                            vm.pendingApproverId.push(item);
+                        }
+                    })
+                    vm.pendingApprover = [];
+                    vm.employeeTimesheet.Pending_x0020_Approver.results.forEach(item => {
+                        if (item.Title != vm.CurrentLoggedInUser) {
+                            // vm.pendingApprover.push({ Title: item.Title , __metadata: {type: "SP.Data.UserInfoItem" } });
+                            vm.pendingApprover.push({ Title: item.Title });
+                        }
+                    })
+                    vm.PendingApproverArray = '';
+                    vm.employeeTimesheet.Pending_x0020_ApproverId.results = vm.pendingApproverId;
+                    vm.employeeTimesheet.Pending_x0020_Approver.results = vm.pendingApprover;
+                    // console.log('emp', vm.employeeTimesheet);
+                    vm.PendingApproverArray = ({ results: vm.pendingApprover });
+                    vm.PendingApproverIDArray = ({ results: vm.pendingApproverId });
+                    //, __metadata: {type:"Collection(Edm.Int32)"}
+                    vm.employeeTimesheet.Pending_x0020_ApproverId = vm.PendingApproverIDArray;
+                    vm.employeeTimesheet.Pending_x0020_Approver = vm.PendingApproverArray;
+                    vm.EmployeeTimesheetList = 'Employee Timesheet';
+                    vm.TimeID = vm.employeeTimesheet.ID;
+                    vm.StatusEdit = vm.employeeTimesheet.Submitted_x0020_Status;
+
+                    spcrud.updateLook($http, vm.EmployeeTimesheetList, vm.TimeID, {
+                        'Pending_x0020_ApproverId': vm.PendingApproverIDArray,
+                        'Submitted_x0020_Status': vm.StatusEdit,
+                        'Timesheet_x0020_Approved_x0020_D': new Date,
+                    }).then(function (response) {
+                        // alert('Pending Hello');
+                        if (response.status === 204) {
+                        }
+                    }, function (error) {
+                        console.log('error', error);
+                    });
+                    ////////////////////////////////////////////////////////////////////////
+                    // alert("Rejected successfully.");
 
                 });
-
+                
             }, function (error) {
 
             });
         }
+        alert("Rejected successfully.");
         $window.location.reload();
     }
+
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////
+    // vm.Reject = function (comment) {
+    //     for (i = 0; i < vm.TimeSheetPopUp.length; i++) {
+    //         var Id = vm.TimeSheetPopUp[i].Id;
+    //         //var Id = vm.DatalistTimeSheet.Id;
+    //         timesheetId = vm.TimeSheetPopUp[i].Timesheet_x0020_ID;
+    //         LoggedInUser = vm.CurrentLoggedInUser;
+    //         var approveTimesheetFilter = '(Timesheet_x0020_ID eq \'' + Id + '\' ) and (Approver_x0020_User/Title eq \'' + LoggedInUser + '\' )';
+    //         var data = comment;
+
+    //         spcrud.update($http, vm.TimeSheetList, Id, {
+    //             'Project_x0020_Timesheet_x0020_St': 'Rejected',
+    //             'Submitted_x0020_Status': 'Rejected',
+    //             'Approver_x0020_Comment': comment
+    //         }).then(function (response) {
+    //             // if (response.status === 204) {
+    //             var timesheetFilter = '(Timesheet_x0020_ID eq \'' + vm.ItemID + '\' )';
+    //             //timesheetFilter = '(Approver_x0020_User/Title eq \'' + CurrentLoggedInUser + '\' )';
+    //             timesheetSelect = 'Approver_x0020_User/Title,Project/Title,*';
+    //             timesheetExpand = 'Approver_x0020_User/Title,Project/Title';
+    //             ModeifiedDate = 'Created desc';
+    //             count = '100';
+    //             var OptionsTimesheet = {
+    //                 select: timesheetSelect,
+    //                 expand: timesheetExpand,
+    //                 orderby: ModeifiedDate,
+    //                 top: count,
+    //                 filter: timesheetFilter
+    //             };
+    //             spcrud.read($http, vm.TimeSheetList, OptionsTimesheet).then(function (Response) {
+    //                 if (Response.status === 200)
+    //                     var myJSON = JSON.stringify(Response.data.d.results);
+    //                 vm.AllTimesheetOfEmployee = Response.data.d.results;
+    //                 vm.AllTimesheetOfEmployee.forEach(ItemData => {
+    //                     if (ItemData.Approver_x0020_User.Title == LoggedInUser) {
+    //                         vm.DatalistTimeSheet = ItemData;
+    //                     }
+    //                 })
+    //                 //console.log('alltimesheetdata', vm.AllTimesheetOfEmployee);
+    //                 approvedTimesheetsCount = 0;
+    //                 rejectedTimesheetsCount = 0;
+    //                 submittedTimesheetsCount = 0;
+    //                 vm.AllTimesheetOfEmployee.forEach(f => {
+    //                     if (f.Project_x0020_Timesheet_x0020_St == "Approved") {
+    //                         approvedTimesheetsCount = approvedTimesheetsCount + 1;
+    //                     } else if (f.Project_x0020_Timesheet_x0020_St == "Rejected") {
+    //                         rejectedTimesheetsCount = rejectedTimesheetsCount + 1;
+    //                     }
+    //                 });
+    //                 spcrud.update($http, vm.EmployeeTimeSheetList, timesheetId, {
+    //                     'Project_x0020_Timesheet_x0020_St': 'Rejected',
+    //                     'Submitted_x0020_Status': 'Rejected',
+    //                     'Approver_x0020_Comment': comment
+    //                 }).then(function (response) {
+    //                     if (response.status === 204) {
+
+    //                     }
+    //                 }, function (error) {
+    //                     console.log('error', error);
+    //                 });
+    //                 vm.AllTimesheetOfEmployee.forEach(f => {
+    //                     if (f.Project_x0020_Timesheet_x0020_St == "Submitted") {
+    //                         spcrud.update($http, vm.TimeSheetList, f.Id, {
+    //                             'Project_x0020_Timesheet_x0020_St': 'Rejected',
+    //                             'Approver_x0020_Comment': comment
+    //                         }).then(function (response) {
+    //                             if (response.status === 204) {
+
+    //                             }
+    //                         }, function (error) {
+    //                             console.log('error', error);
+    //                         });
+    //                     }
+    //                 });
+    //                 if (submittedTimesheetsCount != 0) {
+    //                     if (approvedTimesheetsCount != 0 && rejectedTimesheetsCount != 0) {
+    //                         vm.employeeTimesheet.Email_x0020_Status = false;
+    //                         vm.employeeTimesheet.Submitted_x0020_Status = "Rejected";
+    //                     }
+    //                     if (approvedTimesheetsCount != 0 && rejectedTimesheetsCount == 0) {
+    //                         vm.employeeTimesheet.Submitted_x0020_Status = "PartiallyApproved";
+    //                     }
+    //                     if (approvedTimesheetsCount == 0 && rejectedTimesheetsCount == 0) {
+    //                         vm.employeeTimesheet.Submitted_x0020_Status = "Submitted";
+    //                     }
+    //                     if (approvedTimesheetsCount == 0 && rejectedTimesheetsCount != 0) {
+    //                         vm.employeeTimesheet.Email_x0020_Status = false;
+    //                         vm.employeeTimesheet.Submitted_x0020_Status = "Rejected";
+    //                     }
+    //                 }
+    //                 else if (submittedTimesheetsCount == 0) {
+    //                     if (approvedTimesheetsCount != 0 && rejectedTimesheetsCount != 0) {
+    //                         vm.employeeTimesheet.Email_x0020_Status = false;
+    //                         vm.employeeTimesheet.Submitted_x0020_Status = "Rejected";
+    //                     }
+    //                     if (approvedTimesheetsCount == 0 && rejectedTimesheetsCount != 0) {
+    //                         vm.employeeTimesheet.Email_x0020_Status = false;
+    //                         vm.employeeTimesheet.Submitted_x0020_Status = "Rejected";
+    //                     }
+    //                     if (approvedTimesheetsCount != 0 && rejectedTimesheetsCount == 0) {
+    //                         vm.employeeTimesheet.Email_x0020_Status = false;
+    //                         vm.employeeTimesheet.Submitted_x0020_Status = "Rejected";
+    //                         vm.employeeTimesheet.Timesheet_x0020_Approved_x0020_D = new Date();
+
+    //                         ///Accrued Employee's leave
+    //                         emptimesheet = vm.employeeTimesheet;
+    //                         allTimesheet = vm.AllTimesheetOfEmployee;
+    //                         var empFilter = '(Employee_x0020_ID eq \'' + emptimesheet.Title + '\' )';
+    //                         empListSelect = 'Designation/Title,*';
+    //                         empListExpand = 'Designation/Title';
+
+    //                         var EmpOptions = {
+    //                             filter: empFilter,
+    //                             select: empListSelect,
+    //                             expand: empListExpand
+    //                         };
+    //                         spcrud.read($http, vm.EmployeePersonalDetailsMaster, EmpOptions).then(function (Resp) {
+    //                             if (Resp.status === 200)
+    //                                 var myJSON = JSON.stringify(Resp.data.d.results);
+    //                             vm.Emplist = Resp.data.d.results[0];
+    //                             EmpDOJ = vm.Emplist.DOJ;
+    //                             EmpDOJ = "2017-09-18T18:30:00Z";
+    //                             EmpDesignation = vm.Emplist.Designation.Title;
+    //                             weekStartDate = emptimesheet.Start_x0020_Date;
+    //                             weekEndDate = emptimesheet.End_x0020_Date;
+    //                             EmployeeeName = emptimesheet.Employee.Title;
+    //                             MondayCount = 1.0, TuesdayCount = 1.0, WednesdayCount = 1.0, ThursdayCount = 1.0, FridayCount = 1.0, SaturdayCount = 1.0, SundayCount = 1.0;
+    //                             LeavesCount = 0.0, TotalDaysPresent = 0.0, midWeekJoinNonWorkingday = 0.0;
+    //                             if (allTimesheet.length > 0) {
+    //                                 //find if project type is leave 
+    //                                 allTimesheet.forEach(TimesheetItem => {
+    //                                     var TaskName = TimesheetItem.Task;
+    //                                     //Get project value
+    //                                     var ProjectName = TimesheetItem.Project.Title;
+    //                                     var pro = ProjectName.toLowerCase();
+    //                                     //if yes then check which type of leave and calculate accordingly
+    //                                     if (ProjectName != null && angular.equals(ProjectName.toLowerCase(), "leave")) {
+    //                                         if (TaskName != null) {
+    //                                             if (angular.equals(TaskName.toLowerCase(), "leave")) {
+    //                                                 LeavesCount += 0.0;
+    //                                             }
+    //                                             if (angular.equals(TaskName.toLowerCase(), "halfday leave")) {
+    //                                                 LeavesCount += 0.0;
+    //                                             }
+    //                                             if (angular.equals(TaskName.toLowerCase(), "absent")) {
+    //                                                 LeavesCount += 1.0;
+    //                                             }
+    //                                             if (angular.equals(TaskName.toLowerCase(), "halfday absent")) {
+    //                                                 LeavesCount += 0.5;
+    //                                             }
+    //                                             if (angular.equals(TaskName.toLowerCase(), "holiday floating")) {
+    //                                                 LeavesCount += 0.0;
+    //                                             }
+    //                                         }
+    //                                     }
+    //                                     else {
+    //                                         //else check for each record if there is entry for each day of the week
+    //                                         if ((TimesheetItem.Mondayhrs != null) || (TimesheetItem.Mondaynbhrs != null)) {
+    //                                             MondayCount = 1.0;
+    //                                         }
+    //                                         if ((TimesheetItem.Tuesdayhrs != null) || (TimesheetItem.Tuesdaynbhrs != null)) {
+    //                                             TuesdayCount = 1.0;
+    //                                         }
+    //                                         if ((TimesheetItem.Wednesdayhrs != null) || (TimesheetItem.Wednesdaynbhrs != null)) {
+    //                                             WednesdayCount = 1.0;
+    //                                         }
+    //                                         if ((TimesheetItem.Thursdayhrs != null) || (TimesheetItem.Thursdaynbhrs != null)) {
+    //                                             ThursdayCount = 1.0;
+    //                                         }
+    //                                         if ((TimesheetItem.Fridayhrs != null) || (TimesheetItem.Fridaynbhrs != null)) {
+    //                                             FridayCount = 1.0;
+    //                                         }
+    //                                         if ((TimesheetItem.Saturdayhrs != null) || (TimesheetItem.Saturdaynbhrs != null)) {
+    //                                             SaturdayCount = 1.0;
+    //                                         }
+    //                                         if ((TimesheetItem.Sundayhrs != null) || (TimesheetItem.Sundaynbhrs != null)) {
+    //                                             SundayCount = 1.0;
+    //                                         }
+    //                                     }
+    //                                 })
+    //                             }
+    //                             if (weekEndDate <= EmpDOJ || weekStartDate <= EmpDOJ) {
+    //                                 midWeekJoinNonWorkingday = 0;
+    //                                 for (i = 0; i < 7; i++) //Monday to sunday
+    //                                 {
+    //                                     weekstart = moment(weekStartDate).add('days', i).format("YYYY-MM-DDTHH:mm:ssZ");
+    //                                     if (weekstart < EmpDOJ) {
+    //                                         midWeekJoinNonWorkingday++;
+    //                                     }
+    //                                 }
+    //                             }
+    //                             TotalDaysPresent = MondayCount + TuesdayCount + WednesdayCount + ThursdayCount + FridayCount + SaturdayCount + SundayCount - LeavesCount - midWeekJoinNonWorkingday;
+    //                             statusCurrent = "Current";
+    //                             var statusFilter = '(Status eq \'' + statusCurrent + '\' )';
+    //                             var FinancialYearOptions = {
+    //                                 filter: statusFilter
+    //                             };
+    //                             spcrud.read($http, vm.FinancialYearMaster, FinancialYearOptions).then(function (FinYearResponse) {
+    //                                 if (FinYearResponse.status === 200)
+    //                                     var myJSON = JSON.stringify(FinYearResponse.data.d.results);
+    //                                 vm.FinYear = FinYearResponse.data.d.results[0];
+    //                                 currentFinancialYear = vm.FinYear.Title;
+    //                                // console.log(vm.FinYear);
+    //                                 var leavesFilter = '(Year eq \'' + currentFinancialYear + '\' ) and (Employee_x0020_ID eq \'' + emptimesheet.Title + '\' )';
+    //                                 var leavesFilterOptions = {
+    //                                     filter: leavesFilter
+    //                                 };
+
+
+
+    //                                 spcrud.read($http, vm.EmployeeLeavesMaster, leavesFilterOptions).then(function (empLeavesResponse) {
+    //                                     if (empLeavesResponse.status === 200)
+    //                                         var myJSON = JSON.stringify(empLeavesResponse.data.d.results);
+    //                                     vm.employeeLeavesMasterData = empLeavesResponse.data.d.results[0];
+    //                                    // console.log('Employee Leaves Master', vm.employeeLeavesMasterData);
+    //                                     if (angular.equals(EmpDesignation.toLowerCase(), "trainee")) {
+    //                                         vm.employeeLeavesMasterData.Year_x0020_Start_x0020_Date = vm.FinYear.Start_x0020_Date;
+    //                                         vm.employeeLeavesMasterData.Year_x0020_End_x0020_Date = vm.FinYear.End_x0020_Date;
+    //                                         vm.employeeLeavesMasterData.Accrued_x0020_Leave = vm.employeeLeavesMasterData.Accrued_x0020_Leave + 0; //Trainee can not accrues leave
+    //                                         ///NOTE:: Commenting this functionality as Floating Leave functionality is deprecated. - Shailesh S.
+    //                                         /// employeeLeavesMasterData._FloatingHolidayBalance = employeeLeavesMasterData.FloatingHolidayBalance + (TotalDaysPresent * LeaveAccrualNumbers.FloatingLeave);
+
+    //                                         ///****Linkup calculation****/
+    //                                         /// UpdateLeavesAccrued(currentFinancialYear, 0, EmployeeUser.User, TotalDaysPresent * (0.016));
+    //                                     }
+    //                                     else {
+
+    //                                         vm.employeeLeavesMasterData.Year_x0020_Start_x0020_Date = vm.FinYear.Start_x0020_Date;
+    //                                         vm.employeeLeavesMasterData.Year_x0020_End_x0020_Date = vm.FinYear.End_x0020_Date;
+    //                                         vm.employeeLeavesMasterData.Accrued_x0020_Leave = (parseFloat(vm.employeeLeavesMasterData.Accrued_x0020_Leave) + (TotalDaysPresent * 0.049)).toString(); //Trainee doen't can not accrues leave
+    //                                         ///NOTE:: Commenting this functionality as Floating Leave functionality is deprecated. - Shailesh S.
+    //                                         /// employeeLeavesMasterData._FloatingHolidayBalance = employeeLeavesMasterData.FloatingHolidayBalance + (TotalDaysPresent * LeaveAccrualNumbers.FloatingLeave);
+
+    //                                         ///****Linkup calculation****/
+    //                                         /// UpdateLeavesAccrued(currentFinancialYear, TotalDaysPresent * (0.049), EmployeeUser.User, TotalDaysPresent * (0.016));
+    //                                     }
+    //                                     spcrud.update($http, vm.EmployeeLeavesMaster, vm.employeeLeavesMasterData.ID, {
+    //                                         'Year_x0020_Start_x0020_Date': vm.employeeLeavesMasterData.Year_x0020_Start_x0020_Date,
+    //                                         'Year_x0020_End_x0020_Date': vm.employeeLeavesMasterData.Year_x0020_End_x0020_Date
+    //                                         //  'Accrued_x0020_Leave': vm.employeeLeavesMasterData.Accrued_x0020_Leave
+    //                                     }).then(function (response) {
+    //                                         if (response.status === 204) {
+    //                                             vm.pendingApproverId = [];
+    //                                             vm.employeeTimesheet.Pending_x0020_ApproverId.results.forEach(item => {
+    //                                                 if (item != vm.CurrentLoggedInUserId) {
+    //                                                     vm.pendingApproverId.push(item);
+    //                                                 }
+    //                                             })
+    //                                             vm.pendingApprover = [];
+    //                                             vm.employeeTimesheet.Pending_x0020_Approver.results.forEach(item => {
+    //                                                 if (item.Title != vm.CurrentLoggedInUser) {
+    //                                                     // vm.pendingApprover.push({ Title: item.Title , __metadata: {type: "SP.Data.UserInfoItem" } });
+    //                                                     vm.pendingApprover.push({ Title: item.Title });
+    //                                                 }
+    //                                             })
+    //                                             vm.PendingApproverArray = '';
+    //                                             vm.employeeTimesheet.Pending_x0020_ApproverId.results = vm.pendingApproverId;
+    //                                             vm.employeeTimesheet.Pending_x0020_Approver.results = vm.pendingApprover;
+    //                                            // console.log('emp', vm.employeeTimesheet);
+    //                                             vm.PendingApproverArray = ({ results: vm.pendingApprover });
+    //                                             vm.PendingApproverIDArray = ({ results: vm.pendingApproverId });
+    //                                             //, __metadata: {type:"Collection(Edm.Int32)"}
+    //                                             vm.employeeTimesheet.Pending_x0020_ApproverId = vm.PendingApproverIDArray;
+    //                                             vm.employeeTimesheet.Pending_x0020_Approver = vm.PendingApproverArray;
+    //                                             vm.EmployeeTimesheetList = 'Employee Timesheet';
+    //                                             vm.TimeID = vm.employeeTimesheet.ID;
+    //                                             vm.StatusEdit = vm.employeeTimesheet.Submitted_x0020_Status;
+
+    //                                             spcrud.updateLook($http, vm.EmployeeTimesheetList, vm.TimeID, {
+    //                                                 'Pending_x0020_ApproverId': vm.PendingApproverIDArray,
+    //                                                 'Submitted_x0020_Status': vm.StatusEdit,
+    //                                                 'Timesheet_x0020_Approved_x0020_D': new Date,
+    //                                             }).then(function (response) {
+    //                                                 // alert('Pending Hello');
+    //                                                 if (response.status === 204) {
+    //                                                 }
+    //                                             }, function (error) {
+    //                                                 console.log('error', error);
+    //                                             });
+    //                                         }
+    //                                     }, function (error) {
+    //                                         console.log('error', error);
+    //                                     });
+    //                                 }, function (error) {
+    //                                     console.log('error', error);
+    //                                 });
+    //                             }, function (error) {
+    //                                 console.log('error', error);
+    //                             });
+
+    //                             console.log(vm.Emplist);
+    //                         }, function (error) {
+    //                             console.log('error', error);
+    //                         });
+    //                     }
+
+    //                 }
+
+    //                // alert("Rejected successfully.");
+
+    //             });
+
+    //         }, function (error) {
+
+    //         });
+    //     }
+    //     $window.location.reload();
+    // }
 
 
 }
